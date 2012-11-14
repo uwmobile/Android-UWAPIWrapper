@@ -1,5 +1,4 @@
-Android-UWAPIWrapper
-====================
+## Android-UWAPIWrapper ##
 
 Support Android SDK 8 and above
 
@@ -10,7 +9,7 @@ Website: api.uwaterloo.ca
 
 NO WARRANTY. This simple wrapper is for demo only. Feel free to do whatever you want with it.
 
-## Usage Instruction ##
+## Usage Instructions ##
 To use this wrapper in your projects, follow these steps:
 
 1. Add UWAPIWrapper.jar your project's lib folder
@@ -28,12 +27,12 @@ To use this wrapper in your projects, follow these steps:
     }
 ```
 
-4. Create a UWAPIWrapper object using the listener:
+4. Create a UWAPIWrapper object with the listener:
 ```
-    apiWrapper = new UWAPIWrapper(listener);
+    UWAPIWrapper apiWrapper = new UWAPIWrapper(listener);
 ```
 
-5. Use the callService() method to make an API call. For example:
+5. Use the wrapper's callService() method to make API calls. For example:
 ```
     // Calls the course search service with query "CS 135"
     apiWrapper.callService("CourseSearch", "CS 135");
