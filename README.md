@@ -8,6 +8,7 @@ This wrapper is for students who want to develop app using University of Waterlo
 Website: api.uwaterloo.ca
 
 NO WARRANTY. This simple wrapper is for demo only. Feel free to do whatever you want with it.
+May explode if heated. Do not burn.
 
 ## Usage Instructions ##
 To use this wrapper in your projects, follow these steps:
