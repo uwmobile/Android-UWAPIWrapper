@@ -49,6 +49,10 @@ public class MainActivity extends Activity implements UWAPIWrapperListener {
 
 	@Override
 	public void onUWAPIRequestComplete(JSONObject result, boolean success) {
-		textView1.setText(result.toString());
+		if (success) {
+			textView1.setText(result.toString());
+		} else {
+			textView1.setText("Request Failed!");
+		}
 	}
 }
