@@ -2,6 +2,7 @@
  * Created 12/11/13
  * Author: Bo Yin (bo@uwmobile.ca)
  */
+
 package uwapi;
 
 import java.io.UnsupportedEncodingException;
@@ -14,28 +15,35 @@ import android.util.Log;
 import uwapi.JSONFetcher.JSONFetcherOnCompleteListener;
 
 /*
- * 
+ * Wrapper class for the University of Waterloo Open Data API.
  */
 public class UWAPIWrapper implements JSONFetcherOnCompleteListener {
+	/*
+	 * Listener class that handles the callback.
+	 */
 	public interface UWAPIWrapperListener {
-		public void onRequestComplete(JSONObject result, boolean success);
+		public void onUWAPIRequestComplete(JSONObject result, boolean success);
 	}
 
 	private static final String TAG = "UWAPIWrapper";// debug/log tag
-	private static final String URL_FORMAT =
-			"http://api.uwaterloo.ca/public/v1/?key=%s&service=%s&output=json";
-	private static final String URL_FORMAT_WITH_QUERY =
-			"http://api.uwaterloo.ca/public/v1/?key=%s&service=%s&q=%s&output=json";
+	private static final String URL_FORMAT = "http://api.uwaterloo.ca/public/v1/?key=%s&service=%s&output=json";
+	private static final String URL_FORMAT_WITH_QUERY = "http://api.uwaterloo.ca/public/v1/?key=%s&service=%s&q=%s&output=json";
 
 	private String apiKey_;
-	
+
 	private UWAPIWrapperListener listener_;
-	
+
 	public UWAPIWrapper(String apiKey, UWAPIWrapperListener listener) {
 		apiKey_ = apiKey;
 		listener_ = listener;
 	}
 
+	/*
+	 * Calls a service without query.
+	 * See http://api.uwaterloo.ca for list of services and result structure.
+	 * The listener's onUWAPIRequestComplete method will be called once
+	 * the request is complete.
+	 */
 	public void callService(String service) {
 		try {
 			String queryString = String.format(URL_FORMAT,
@@ -46,7 +54,13 @@ public class UWAPIWrapper implements JSONFetcherOnCompleteListener {
 			Log.d(TAG, e.toString());
 		}
 	}
-	
+
+	/*
+	 * Calls a service with query.
+	 * See http://api.uwaterloo.ca for list of services and result structure.
+ 	 * The listener's onUWAPIRequestComplete method will be called once
+	 * the request is complete.
+	 */
 	public void callService(String service, String parameter) {
 		try {
 			String queryString = String.format(URL_FORMAT_WITH_QUERY,
@@ -65,6 +79,6 @@ public class UWAPIWrapper implements JSONFetcherOnCompleteListener {
 	}
 
 	public void onJsonFetcherComplete(JSONObject result, boolean success) {
-		listener_.onRequestComplete(result, success);
+		listener_.onUWAPIRequestComplete(result, success);
 	}
 }

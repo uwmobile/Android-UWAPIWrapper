@@ -21,14 +21,14 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 /*
- * 
+ * Async task that fetches a JSON object from HTTP.
  */
 public class JSONFetcher extends AsyncTask<String, Boolean, JSONObject> {
 	public interface JSONFetcherOnCompleteListener {
 		public void onJsonFetcherComplete(JSONObject object, boolean success);
 	}
 
-	private static final String TAG = "JsonFetcher";// debug/log tag
+	private static final String TAG = "UWAPIWrapper/JsonFetcher";// debug/log tag
 
 	private JSONFetcherOnCompleteListener listener_;
 
@@ -36,8 +36,8 @@ public class JSONFetcher extends AsyncTask<String, Boolean, JSONObject> {
 		listener_ = listener;
 	}
 
-	private String requestJsonData(String requestUrl) throws ClientProtocolException, IOException {
-		Log.d(TAG, requestUrl); // TODO: remove debug Log
+	private String requestJsonData(String requestUrl)
+			throws ClientProtocolException, IOException {
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpResponse response = httpclient.execute(new HttpGet(requestUrl));
 		StatusLine statusLine = response.getStatusLine();
@@ -57,27 +57,27 @@ public class JSONFetcher extends AsyncTask<String, Boolean, JSONObject> {
 
 	@Override
 	protected JSONObject doInBackground(String... params) {
-    	try {
-    		String jsonString = requestJsonData(params[0]); 
-    		return new JSONObject(jsonString);
-    	} catch (ClientProtocolException e) {
-    		Log.d(TAG, e.toString());
-    		return null;
-    	} catch (IOException e) {
-    		Log.d(TAG, e.toString());
-    		return null;
-    	} catch (JSONException e) {
-    		Log.d(TAG, e.toString());
-    		return null;
-    	}
+		try {
+			String jsonString = requestJsonData(params[0]);
+			return new JSONObject(jsonString);
+		} catch (ClientProtocolException e) {
+			Log.d(TAG, e.toString());
+			return null;
+		} catch (IOException e) {
+			Log.d(TAG, e.toString());
+			return null;
+		} catch (JSONException e) {
+			Log.d(TAG, e.toString());
+			return null;
+		}
 	}
 
 	@Override
-    protected void onPostExecute(JSONObject result) {
+	protected void onPostExecute(JSONObject result) {
 		if (result == null) {
-	        listener_.onJsonFetcherComplete(null, false);
+			listener_.onJsonFetcherComplete(null, false);
 		} else {
 			listener_.onJsonFetcherComplete(result, true);
 		}
-    }
+	}
 }
