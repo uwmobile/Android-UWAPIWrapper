@@ -17,13 +17,19 @@ import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends Activity implements UWAPIWrapperListener {
+	// Paste your API key here
+	// Get API key from: http://api.uwaterloo.ca/#!/keygen
 	private static final String API_KEY = "ENTER YOUR API KEY HERE";
 
+	// UI elements
 	private Button button1;
 	private TextView textView1;
+	private EditText editText1;
+
 	private UWAPIWrapper apiWrapper;
 
 	@Override
@@ -31,9 +37,13 @@ public class MainActivity extends Activity implements UWAPIWrapperListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		// Link up UI elements:
 		textView1 = (TextView) findViewById(R.id.textView1);
 		button1 = (Button) findViewById(R.id.button1);
+		editText1 = (EditText) findViewById(R.id.editText1);
 
+		// Initialize an API wrapper object using the API key and this activity
+		// as the listener.
 		apiWrapper = new UWAPIWrapper(API_KEY, this);
 	}
 
@@ -44,15 +54,19 @@ public class MainActivity extends Activity implements UWAPIWrapperListener {
 	}
 
 	public void buttonClicked(View view) {
-		apiWrapper.callService("CourseSearch", "CS 135");
+		// Call the CourseSearch service using the given course code.
+		apiWrapper.callService("CourseSearch", editText1.getText().toString());
 	}
 
 	@Override
-	public void onUWAPIRequestComplete(JSONObject result, boolean success) {
+	public void onUWAPIRequestComplete(JSONObject jsonObject, boolean success) {
 		if (success) {
-			textView1.setText(result.toString());
+			// Got result JSON
+			// See output format at: http://api.uwaterloo.ca/#!/coursesearch
+			textView1.setText(jsonObject.toString());
 		} else {
-			textView1.setText("Request Failed!");
+			// Request failed (most likely network issue).
+			textView1.setText("Request Failed! Check your network.");
 		}
 	}
 }
