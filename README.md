@@ -4,7 +4,7 @@ Support Android SDK 8 and above
 
 Created by Bo Yin, UW Mobile Club.
 
-This wrapper is for students who want to develop app using University of Waterloo Open Data Initiative.
+This wrapper is for students that want to integrate University of Waterloo Open Data API into their apps.
 Website: api.uwaterloo.ca
 
 NO WARRANTY. This simple wrapper is for demo only. Feel free to do whatever you want with it.
